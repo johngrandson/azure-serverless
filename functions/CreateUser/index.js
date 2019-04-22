@@ -14,14 +14,6 @@ module.exports = async function (context, req) {
 	// Log the entire request URI.
 	log('[RAN] RequestUri=%s', req.originalUrl);
 
-	/**
-	 * Azure function Response.
-	 *
-	 * Processes the `req` request from POST body
-	 * and saves the data to MongoDB Atlas while
-	 * responding the `res` response.
-	 */
-
 	// Database interaction.
     const mongoose = require('mongoose');
     const databaseConnect = require('../../database');
@@ -59,8 +51,5 @@ module.exports = async function (context, req) {
 		};
 	}
 
-
-	// Informs the runtime that your code has finished. You must call context.done, or else the runtime never knows that your function is complete, and the execution will time out.
-	// @link: https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-node#contextdone-method
 	context.done();
 };

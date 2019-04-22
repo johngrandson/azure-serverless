@@ -7,20 +7,12 @@
  * @param context To pass data between function to / from runtime.
  * @param req HTTP Request sent to the Azure function by POST body.
  */
-module.exports = async function (context, req) {
+module.exports = async (context, req) => {
 	// Let's call it log.
 	const log = context.log;
 
 	// Log the entire request URI.
 	log('[RAN] RequestUri=%s', req.originalUrl);
-
-	/**
-	 * Azure function Response.
-	 *
-	 * Processes the `req` request from POST body
-	 * and saves the data to MongoDB Atlas while
-	 * responding the `res` response.
-	 */
 
 	// Database interaction.
     const mongoose = require('mongoose');
@@ -33,11 +25,13 @@ module.exports = async function (context, req) {
 	require('../../models/user.model');
 	const User = mongoose.model('User');
 
+    console.log('req', req)
+
 	// Create a Response.
 	if (req) { // Simple authentication for the purpose of demo.
 
 		// Save to db.
-		const users = await User.find({});
+        const users = await User.find({});
 		log("[OUTPUT]—— USERS LISTED: ", users);
 
 		// Respond with 200.
@@ -52,8 +46,5 @@ module.exports = async function (context, req) {
 		};
 	}
 
-
-	// Informs the runtime that your code has finished. You must call context.done, or else the runtime never knows that your function is complete, and the execution will time out.
-	// @link: https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-node#contextdone-method
 	context.done();
 };
